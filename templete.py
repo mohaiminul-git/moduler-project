@@ -9,15 +9,15 @@ while True:
         break
     
 list_of_files=[
-    f"{project_name}/init.py",
-    f"{project_name}/Components/init.py",
-    f"{project_name}/Config/init.py",
-    f"{project_name}/Constants/init.py",
-    f"{project_name}/entity/init.py",
-    f"{project_name}/Exception/init.py",
-    f"{project_name}/logger/init.py",
-    f"{project_name}/pipeline/init.py",
-    f"{project_name}/utils/init.py",
+    f"{project_name}/__init__.py",
+    f"{project_name}/Components/__init__.py",
+    f"{project_name}/Config/__init__.py",
+    f"{project_name}/Constants/__init__.py",
+    f"{project_name}/entity/__init__.py",
+    f"{project_name}/Exception/__init__.py",
+    f"{project_name}/logger/__init__.py",
+    f"{project_name}/pipeline/__init__.py",
+    f"{project_name}/utils/__init__.py",
     f"config/config.yml",
     "schema.yml",
     "app.py",
@@ -38,3 +38,4 @@ for file_path in list_of_files:
         
     else:
         logging.info(f"file is already present at : {file_path}")
+    
