@@ -17,3 +17,13 @@ ingested_data_dir="ingested_data"
 raw_data_dir_key="raw.csv"
 train_data="train.csv"
 test_data="test.csv"
+
+#data_transformation
+data_transformation_artifacts="data_transformation"
+data_processor_dir="processor"
+data_processor_dir_key="processor.pkl"
+transformed_data_dir="transformed_data"
+transformed_train_data_dir_key="train.csv"
+transformed_test_data_dir_key= "test.csv"
+
+
