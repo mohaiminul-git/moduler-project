@@ -9,6 +9,7 @@ import pandas as pd
 from dataclasses import dataclass
 from src.Components.data_transformation import  Data_transformation
 from src.utils import save_obj
+from src.Components.model_trainer import Model_trainer
 
 @dataclass
 class Dataingestion_Config:
@@ -50,3 +51,5 @@ if __name__ == "__main__":
     train_data,test_data = obj.initiate_data_ingestion()
     data_transformation= Data_transformation()
     train_arr,test_arr,process=data_transformation.initiate_data_transformation(train_data,test_data)
+    model_trainer=Model_trainer()
+    print(model_trainer.initiate_model_training(train_arr, test_arr))

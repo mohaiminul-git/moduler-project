@@ -21,3 +21,6 @@ preproceesing_test_data_path= os.path.join(root_dir, artifact_dir,data_transform
 
 feature_engeenering_obj_path= os.path.join(root_dir,artifact_dir,data_transformation_artifacts,data_processor_dir,
                                            "featue_engeenering.pkl")
+
+##model Trainer
+model_trainer_path= os.path.join(root_dir, artifact_dir,model_trainer_artifacts,model_trainer_artifacts)
