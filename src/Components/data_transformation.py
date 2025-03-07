@@ -17,27 +17,18 @@ class Feature_engeenering(BaseEstimator, TransformerMixin):
     def __init__(self):
         logging.info("******feature engeneering .....")
         
-        
-    # def get_distance(self, df, lat1, lon1, lat2, lon2):
-    #     # Ensure latitudes and longitudes are absolute values
-    #     df[lat1] = df[lat1].abs()
-    #     df[lat2] = df[lat2].abs()
-        
-    #     df = df[(df[lat1] >= 9) & (df[lat2] >= 9)].copy()
-        
-    #     p = np.pi / 180
-    #     a = 0.5 - np.cos((df[lat2] - df[lat1]) * p) / 2 + np.cos(df[lat1] * p) * np.cos(df[lat2] * p) * (1 - np.cos((df[lon2] - df[lon1]) * p)) / 2
-    #     df['distance'] = 12734 * np.arccos(a)  # Earth radius = 12734 km
-    #     return df
+   
     def get_distance(self, df, lat1, lon1, lat2, lon2):
-    # Ensure latitudes and longitudes are absolute values
+        # Ensure latitudes and longitudes are absolute values
         df[lat1] = df[lat1].abs()
         df[lat2] = df[lat2].abs()
-        df = df.drop(df[(df['Restaurant_latitude'] < 8) & (df['Delivery_location_latitude'] < 8)].index)
+        df.drop(df[(df['Restaurant_latitude'] < 8) & (df['Delivery_location_latitude'] < 8)].index,inplace=True)
         p = np.pi / 180
-        a = 0.5 - np.cos((df[lat2] - df[lat1]) * p) / 2 + np.cos(df[lat1] * p) * np.cos(df[lat2] * p) * (1 - np.cos((df[lon2] - df[lon1]) * p)) / 2
-        df['distance'] = 12734 * np.arccos(np.clip(a, -1, 1))  # Earth radius = 12734 km
-        
+        a = (0.5 - np.cos((df[lat2] - df[lat1]) * p) / 2 +
+             np.cos(df[lat1] * p) * np.cos(df[lat2] * p) *
+             (1 - np.cos((df[lon2] - df[lon1]) * p)) / 2)
+        df['distance'] = 12734 * np.arccos(np.clip(a, -1, 1))
+        return df
 
     
     def extract_time(self,df):
@@ -53,28 +44,26 @@ class Feature_engeenering(BaseEstimator, TransformerMixin):
     def extract_city(self,df):
         var='Delivery_person_ID'
         df['Delivery_city'] = df[var].str.split('RES', expand=True)[0]
-        
+       
             
     def drop_variables(self,df):
         try:
             col_list=["ID",'Delivery_person_ID','Restaurant_latitude','Restaurant_longitude','Delivery_location_latitude','Delivery_location_longitude',
             'Order_Date','Time_Orderd','Time_Orderd_min','Time_Order_picked_hour','Time_Order_picked_min' ]
             df.drop(columns=col_list,inplace=True) 
-                
+                 
         except Exception as e:
             raise Custom_exception(e,sys)
         
-    def transform_feature(self,df):
+    def transform_feature(self, df):
         try:
-            self.get_distance(df,'Restaurant_latitude',
-                                'Restaurant_longitude',
-                                'Delivery_location_latitude',
-                                'Delivery_location_longitude')
+            df = self.get_distance(df, 'Restaurant_latitude', 'Restaurant_longitude',
+                                'Delivery_location_latitude', 'Delivery_location_longitude')
             self.extract_time(df)
             self.extract_city(df)
             self.drop_variables(df)
             return df
-            
+                
         except Exception as e:
             raise Custom_exception(e,sys)
         
@@ -112,7 +101,7 @@ class Data_transformation:
             numerical_column=['Delivery_person_Age','Delivery_person_Ratings','Vehicle_condition','multiple_deliveries',
                     'Time_Orderd_hour','distance']
             
-            #numerical pipeline
+            #numerical pipelineexit()
             numerical_pipeline=Pipeline(steps=[
                 ("imputer",SimpleImputer()),
                 ("sclaer",StandardScaler(with_mean=False))
@@ -164,14 +153,14 @@ class Data_transformation:
 
             X_test = test_data.drop(columns = traget_columns_name, axis = 1)
             y_test = test_data[traget_columns_name]
-            
+            X_train = processing_obj.fit_transform(X_train)
+            X_test = processing_obj.transform(X_test)
             train_arr = np.c_[X_train, np.array(y_train)]
             test_arr = np.c_[X_test, np.array(y_test)]
             df_train = pd.DataFrame(train_arr)
             df_test = pd.DataFrame(test_arr)
             
-            df_train = pd.DataFrame(X_train)
-            df_test = pd.DataFrame(X_test)
+           
             os.makedirs(os.path.dirname(self.dataTransformationConfig.preproceesing_train_data_path),exist_ok=True)
             df_train.to_csv(self.dataTransformationConfig.preproceesing_train_data_path,index=False,header=True)
             
@@ -188,4 +177,5 @@ class Data_transformation:
                    self.dataTransformationConfig.preproceesing_obj_path)
         except Exception as e:
             raise Custom_exception(e,sys)
+            
             

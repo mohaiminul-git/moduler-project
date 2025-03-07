@@ -26,4 +26,7 @@ transformed_data_dir="transformed_data"
 transformed_train_data_dir_key="train.csv"
 transformed_test_data_dir_key= "test.csv"
 
+#mode training
+model_trainer_artifacts="model_trainer"
+model_trainer_artifacts_key="trained_model.pkl"
 
