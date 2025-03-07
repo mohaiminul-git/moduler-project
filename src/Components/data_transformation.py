@@ -37,8 +37,11 @@ class Feature_engeenering(BaseEstimator, TransformerMixin):
         for var in variables_list:
             df[var] = df[var].replace(".",":")
             df[var] = pd.to_datetime(df[var],format="%H:%M", errors="coerce")
-            df[f"{var}_hour"]=df[var].dt.hour.astype("Int32")
-            df[f"{var}_min"]=df[var].dt.minute.astype("Int32")
+            df[var] = df[var].dt.strftime("%H:%M")
+            
+            
+            df[f"{var}_hour"] = pd.to_datetime(df[var], format="%H:%M").dt.hour.astype("Int32")  
+            df[f"{var}_min"] = pd.to_datetime(df[var], format="%H:%M").dt.minute.astype("Int32")  
         
             
     def extract_city(self,df):
@@ -49,7 +52,7 @@ class Feature_engeenering(BaseEstimator, TransformerMixin):
     def drop_variables(self,df):
         try:
             col_list=["ID",'Delivery_person_ID','Restaurant_latitude','Restaurant_longitude','Delivery_location_latitude','Delivery_location_longitude',
-            'Order_Date','Time_Orderd','Time_Orderd_min','Time_Order_picked_hour','Time_Order_picked_min' ]
+            'Order_Date','Time_Orderd','Time_Orderd_min','Time_Order_picked','Time_Order_picked_hour','Time_Order_picked_min' ]
             df.drop(columns=col_list,inplace=True) 
                  
         except Exception as e:
@@ -143,8 +146,8 @@ class Data_transformation:
             fe_obj=self.get_feature_engeneering_obj()
             train_data=fe_obj.fit_transform(train_data)
             test_data=fe_obj.transform(test_data)
-            train_data.to_csv("train_data.csv")
-            test_data.to_csv("test_data.csv")
+            train_data.to_csv("train_data.csv",index=False,header=True)
+            test_data.to_csv("test_data.csv",index=False,header=True)
             processing_obj=self.get_data_transformation_obj()
             traget_columns_name = "Time_taken (min)"
 
