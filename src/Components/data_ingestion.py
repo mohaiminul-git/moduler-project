@@ -46,10 +46,10 @@ class Data_Ingestion:
             raise Custom_exception(e,sys)
 
 
-if __name__ == "__main__":
-    obj= Data_Ingestion()
-    train_data,test_data = obj.initiate_data_ingestion()
-    data_transformation= Data_transformation()
-    train_arr,test_arr,process=data_transformation.initiate_data_transformation(train_data,test_data)
-    model_trainer=Model_trainer()
-    model_trainer.initiate_model_training(train_arr, test_arr)
+# if __name__ == "__main__":
+#     obj= Data_Ingestion()
+#     train_data,test_data = obj.initiate_data_ingestion()
+#     data_transformation= Data_transformation()
+#     train_arr,test_arr,process=data_transformation.initiate_data_transformation(train_data,test_data)
+#     model_trainer=Model_trainer()
+#     print(model_trainer.initiate_model_training(train_arr, test_arr))

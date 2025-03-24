@@ -23,4 +23,4 @@ feature_engeenering_obj_path= os.path.join(root_dir,artifact_dir,data_transforma
                                            "featue_engeenering.pkl")
 
 ##model Trainer
-model_trainer_path= os.path.join(root_dir, artifact_dir,model_trainer_artifacts,model_trainer_artifacts)
+model_trainer_path= os.path.join(root_dir, artifact_dir,model_trainer_artifacts,model_trainer_artifacts_key)
