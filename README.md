@@ -22,22 +22,33 @@ This project is a **modular machine learning pipeline** designed to predict deli
 ```bash
 moduler-project/
 │
-├── Artifacts/              # Stores trained model artifacts
-├── Data/                   # Raw and processed datasets
-├── batch_prediction/       # Code for batch prediction
-├── config/                 # Configuration files (e.g., params)
-├── src/                    # Core source code (custom modules)
+├── Artifacts/               # Stores trained model artifacts
+├── Data/                    # Raw and processed datasets
+├── batch_prediction/        # Code for batch prediction
+├── config/                  # Configuration files (e.g., params)
+├── src/                     # Core source code
+│   ├── Components/          # Modular components for the ML pipeline
+│   │   ├── data_ingestion.py        # Handles data ingestion
+│   │   ├── data_transformation.py   # Manages data transformation
+│   │   └── model_trainer.py         # Responsible for model training
+│   │
+│   ├── Config/              # Configuration-related modules
+│   ├── Constants/           # Constant values used across the project
+│   ├── Entity/              # Entity definitions and data classes
+│   ├── Exception/           # Custom exception handling
+│   ├── Logger/              # Logging setup and utilities
+│   ├── Pipeline/            # Pipeline orchestration modules
+│   └── Utils/               # Utility functions and helpers
 │
-├── app.py                  # Streamlit app entry point
-├── main.py                 # Orchestrates the ML pipeline
-├── exception.py            # Custom exception handling
-├── logs.py                 # Logging setup
-├── requirements.txt        # Python dependencies
-├── setup.py                # For packaging the project
-├── schema.yml              # Data schema definition
-├── test_data.csv           # Sample test data
-├── train_data.csv          # Sample training data
-└── README.md               # Project overview
+├── app.py                   # Streamlit app entry point
+├── main.py                  # Orchestrates the ML pipeline
+├── requirements.txt         # Python dependencies
+├── setup.py                 # For packaging the project
+├── schema.yml               # Data schema definition
+├── test_data.csv            # Sample test data
+├── train_data.csv           # Sample training data
+└── README.md                # Project overview
+
 ```
 
 ---
@@ -72,7 +83,7 @@ streamlit run app.py
 
 ## 📊 Streamlit App Preview
 
-> git 
+> ![App Preview](app_preview.png)
 
 ---
 
@@ -91,7 +102,7 @@ streamlit run app.py
 
 ## 📚 Tech Stack
 
-- Python 3.12
+- Python 3.8.0
 - Scikit-learn
 - Pandas, NumPy
 - Streamlit
